@@ -1,0 +1,217 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>默认右键菜单</title>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.5&key=a20ae3e65ce18dbe513c159895619ebc"></script>
+    <!--<script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>-->
+    <style type="text/css">
+        body {
+            font-size: 12px;
+        }
+        #tip {
+            background-color: #ddf;
+            color: #333;
+            border: 1px solid silver;
+            box-shadow: 3px 4px 3px 0px silver;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            line-height: 20px;
+        }
+        #tip input[type="text"] {
+            height: 25px;
+            border: 0;
+            padding-left: 5px;
+            width: 280px;
+            border-radius: 3px;
+            outline: none;
+        }
+        #panel {
+            position: absolute;
+            background-color: white;
+            max-height: 80%;
+            overflow-y: auto;
+            top: 30px;
+            right: 10px;
+            width: 250px;
+            border: solid 1px silver;
+        }
+
+    </style>
+</head>
+<body>
+<div id="container" style="height: 600px;top: 150px;"></div>
+<div id="panel"></div>
+<div id="tip">
+    <input type="text" id="keyword" name="keyword" value="请输入关键字：(选定后搜索)" onfocus='this.value=""'/>
+</div>
+<br/>
+</body>
+<div style="height: 200px">
+<p id="number">从React Native接收的消息: 0</p>
+
+<p id="content">(没有消息)</p>
+<button type="button">
+    给React Native发送消息
+</button>
+</div>
+<!--<div id="tip">地图上右击鼠标，弹出右键菜单</div>-->
+<!--<script type="text/javascript">
+    var map = new AMap.Map("container", {
+        resizeEnable: true
+    });
+    var contextMenu = new AMap.ContextMenu();  //创建右键菜单
+    //右键放大
+    contextMenu.addItem("放大一级", function() {
+        map.zoomIn();
+    }, 0);
+    //右键缩小
+    contextMenu.addItem("缩小一级", function() {
+        map.zoomOut();
+    }, 1);
+    //右键显示全国范围
+    contextMenu.addItem("缩放至全国范围", function(e) {
+        map.setZoomAndCenter(4, [108.946609, 34.262324]);
+    }, 2);
+    //右键添加Marker标记
+    contextMenu.addItem("添加标记", function(e) {
+        var marker = new AMap.Marker({
+            map: map,
+            position: contextMenuPositon //基点位置
+        });
+    }, 3);
+
+    //地图绑定鼠标右击事件——弹出右键菜单
+    map.on('rightclick', function(e) {
+        contextMenu.open(map, e.lnglat);
+        contextMenuPositon = e.lnglat;
+    });
+
+    AMap.plugin(['AMap.ToolBar','AMap.Scale','AMap.OverView','AMap.Geolocation','AMap.MapType'],
+        function(){
+            map.addControl(new AMap.ToolBar());
+
+            map.addControl(new AMap.Scale());               //比例尺
+
+            map.addControl(new AMap.OverView({isOpen:true}));//右下角的缩略图
+
+            map.addControl(new AMap.Geolocation());//右下角的缩略图
+
+            map.addControl(new AMap.MapType());//类别切换
+        });
+
+
+    map.setMapStyle('amap://styles/light');
+</script>-->
+<script>
+    var map = new AMap.Map("container", {
+        resizeEnable: true,
+        center: [116.397428, 39.90923],//地图中心点
+        zoom: 13 //地图显示的缩放级别
+    });
+    AMap.plugin(['AMap.ToolBar','AMap.Scale','AMap.OverView','AMap.Geolocation','AMap.MapType'],
+        function(){
+            map.addControl(new AMap.ToolBar());
+
+            map.addControl(new AMap.Scale());               //比例尺
+
+            map.addControl(new AMap.OverView({isOpen:true}));//右下角的缩略图
+
+            map.addControl(new AMap.Geolocation());//右下角的缩略图
+
+            map.addControl(new AMap.MapType());//类别切换
+        });
+
+
+    map.setMapStyle('amap://styles/light');
+
+
+    AMap.service('AMap.PlaceSearch',function(){//回调函数
+        //实例化PlaceSearch
+        placeSearch= new AMap.PlaceSearch();
+        //TODO: 使用placeSearch对象调用关键字搜索的功能
+    })
+
+    var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+        pageSize: 5,
+        pageIndex: 1,
+        city: "010", //城市
+        map: map,
+        panel: "result"
+    });
+    //关键字查询
+    placeSearch.search('卫生间', function(status, result) {
+        console.log(result);
+        console.log(JSON.stringify(result));
+        document.getElementsByTagName('button')[0].addEventListener('click', function() {
+            window.postMessage(JSON.stringify(result));
+
+        });
+//        window.postMessage(JSON.stringify(result));
+    });
+
+
+//    AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
+//        var autoOptions = {
+//            city: "北京", //城市，默认全国
+//            input: "keyword"//使用联想输入的input的id
+//        };
+//        autocomplete= new AMap.Autocomplete(autoOptions);
+//        var placeSearch = new AMap.PlaceSearch({
+//            city:'北京',
+//            map:map
+//        })
+//        AMap.event.addListener(autocomplete, "select", function(e){
+//            //TODO 针对选中的poi实现自己的功能
+//            placeSearch.setCity(e.poi.adcode);
+//            placeSearch.search(e.poi.name)
+//        });
+//    });
+
+
+    /*
+     * 调用公交换乘服务
+     */
+    //加载公交换乘插件
+    AMap.service(["AMap.Driving"], function() {
+        var transOptions = {
+            map: map,
+//            city: '北京市',
+            panel:'panel',                            //公交城市
+            //cityd:'乌鲁木齐',
+//            policy: AMap.Driving.LEAST_TIME //乘车策略
+        };
+        //构造公交换乘类
+        var trans = new AMap.Driving(transOptions);
+        //根据起、终点坐标查询公交换乘路线
+        trans.search([{keyword:'北京市地震局(公交站)'},{keyword:'望京西园4区'}], function(status, result){
+        });
+    });
+
+</script>
+<script>
+    console.log('nihao erudaaasas');
+    var messagesReceivedFromReactNative = 0;
+    document.addEventListener('message', function(e) {
+        messagesReceivedFromReactNative += 1;
+        document.getElementById('number').innerHTML =
+            '从React Native接收的消息: ' + messagesReceivedFromReactNative;
+        document.getElementById('content').innerHTML = e.data;
+        console.log(e.data);
+    });
+    document.getElementsByTagName('button')[0].addEventListener('click', function() {
+        window.postMessage(JSON.stringify({name:'haha',age:18}));
+
+    });
+</script>
+
+
+<!--<script src="../../../node_modules/eruda/eruda.min.js"></script>-->
+<!--<script>eruda.init();</script>-->
+</html>

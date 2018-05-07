@@ -1,0 +1,16 @@
+[
+  {
+    "title": "Fading Exits",
+    "data": [
+      "fadeOut",
+      "fadeOutDown",
+      "fadeOutDownBig",
+      "fadeOutUp",
+      "fadeOutUpBig",
+      "fadeOutLeft",
+      "fadeOutLeftBig",
+      "fadeOutRight",
+      "fadeOutRightBig"
+    ]
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "AbcKeyboard":[
+    {"id": 0, "content": "A"},
+    {"id": 1, "content": "B"},
+    {"id": 2, "content": "C"},
+    {"id": 3, "content": "D"},
+    {"id": 4, "content": "E"},
+    {"id": 5, "content": "F"},
+    {"id": 6, "content": "G"},
+    {"id": 7, "content": "H"},
+    {"id": 8, "content": "I"},
+    {"id": 9, "content": "J"},
+    {"id": 10, "content": "K"},
+    {"id": 11, "content": "L"},
+    {"id": 12, "content": "M"},
+    {"id": 13, "content": "N"},
+    {"id": 14, "content": "O"},
+    {"id": 15, "content": "P"},
+    {"id": 16, "content": "Q"},
+    {"id": 17, "content": "R"},
+    {"id": 18, "content": "S"},
+    {"id": 19, "content": "T"},
+    {"id": 20, "content": "U"},
+    {"id": 21, "content": "V"},
+    {"id": 22, "content": "W"},
+    {"id": 23, "content": "X"},
+    {"id": 24, "content": "Y"},
+    {"id": 25, "content": "Z"},
+    {"id": 26, "content": "错"}
+  ],
+  "NumKeyboard":[
+    {"id": 0, "content": "0"},
+    {"id": 1, "content": "1"},
+    {"id": 2, "content": "2"},
+    {"id": 3, "content": "3"},
+    {"id": 4, "content": "4"},
+    {"id": 5, "content": "5"},
+    {"id": 6, "content": "6"},
+    {"id": 7, "content": "7"},
+    {"id": 8, "content": "8"},
+    {"id": 9, "content": "9"}
+  ]
+}
